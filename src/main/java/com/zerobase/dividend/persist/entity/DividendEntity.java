@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Entity(name = "DIVIDEND")
-public class Dividend {
+public class DividendEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
