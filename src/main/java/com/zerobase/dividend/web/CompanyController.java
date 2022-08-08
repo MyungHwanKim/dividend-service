@@ -16,11 +16,16 @@ import java.util.List;
 @AllArgsConstructor
 public class CompanyController {
 
+
     private final CompanyService companyService;
 
     @GetMapping("/company/autocomplete")
     public ResponseEntity<?> autocomplete(@RequestParam String keyword) {
-        return null;
+        // Trie 방식
+//        List<String> result = companyService.autocomplete(keyword);
+        // Like 방식
+        List<String> result = companyService.getCompanyNamesByKeyword(keyword);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/company")
@@ -37,6 +42,7 @@ public class CompanyController {
         }
 
         Company company = companyService.save(ticker);
+        companyService.addAutocompleteKeyword(company.getName());
         return ResponseEntity.ok(company);
     }
 
