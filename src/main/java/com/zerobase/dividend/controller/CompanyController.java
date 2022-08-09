@@ -1,4 +1,4 @@
-package com.zerobase.dividend.web;
+package com.zerobase.dividend.controller;
 
 import com.zerobase.dividend.model.Company;
 import com.zerobase.dividend.persist.entity.CompanyEntity;
