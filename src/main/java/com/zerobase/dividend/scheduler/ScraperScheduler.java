@@ -24,16 +24,16 @@ public class ScraperScheduler {
     private final DividendRepository dividendRepository;
     private final Scraper yahooFinanceScraper;
 
-    @Scheduled(fixedDelay = 1000)
-    public void test1() throws InterruptedException {
-        Thread.sleep(10000);
-        System.out.println(Thread.currentThread().getName() + " -> 테스트 1 : " + LocalDateTime.now());
-    }
-
-    @Scheduled(fixedDelay = 1000)
-    public void test2() throws InterruptedException {
-        System.out.println(Thread.currentThread().getName() + " -> 테스트 2 : " + LocalDateTime.now());
-    }
+//    @Scheduled(fixedDelay = 1000)
+//    public void test1() throws InterruptedException {
+//        Thread.sleep(10000);
+//        System.out.println(Thread.currentThread().getName() + " -> 테스트 1 : " + LocalDateTime.now());
+//    }
+//
+//    @Scheduled(fixedDelay = 1000)
+//    public void test2() throws InterruptedException {
+//        System.out.println(Thread.currentThread().getName() + " -> 테스트 2 : " + LocalDateTime.now());
+//    }
 
 //    @Scheduled(cron = "${scheduler.scrap.yahoo}")
     public void yahooFinanceScheduling() {
@@ -44,10 +44,7 @@ public class ScraperScheduler {
         // 회사마다 배당금 정보를 새로 스크래핑
         for (CompanyEntity company : companies) {
             log.info("scraping scheduler is started -> " + company.getName());
-            ScrapedResult scrapedResult = yahooFinanceScraper.scrap(Company.builder()
-                                                                .name(company.getName())
-                                                                .ticker(company.getTicker())
-                                                                .build());
+            ScrapedResult scrapedResult = yahooFinanceScraper.scrap(new Company(company.getName(), company.getTicker()));
             // 스크래핑한 배당금 정보 중 데이터베이스에 없는 값은 저장
             scrapedResult.getDividendEntities().stream()
                     // Diviend 모델을 DiviendEntity로 매핑
