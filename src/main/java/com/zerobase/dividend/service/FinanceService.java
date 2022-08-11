@@ -3,6 +3,7 @@ package com.zerobase.dividend.service;
 import com.zerobase.dividend.model.Company;
 import com.zerobase.dividend.model.Dividend;
 import com.zerobase.dividend.model.ScrapedResult;
+import com.zerobase.dividend.model.constants.CacheKey;
 import com.zerobase.dividend.persist.entity.CompanyEntity;
 import com.zerobase.dividend.persist.entity.DividendEntity;
 import com.zerobase.dividend.persist.repository.CompanyRepository;
@@ -24,7 +25,7 @@ public class FinanceService {
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
 
-    @Cacheable(key = "#companyName", value = "finance")
+    @Cacheable(key = "#companyName", value = CacheKey.KEY_FINANCE)
     public ScrapedResult getDividendByCompanyName(String companyName) {
         log.info("search company ->" + companyName);
         
