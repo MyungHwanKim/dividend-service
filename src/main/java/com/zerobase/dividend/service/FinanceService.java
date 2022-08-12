@@ -28,11 +28,11 @@ public class FinanceService {
     @Cacheable(key = "#companyName", value = CacheKey.KEY_FINANCE)
     public ScrapedResult getDividendByCompanyName(String companyName) {
         log.info("search company ->" + companyName);
-        
+
         // 1. 회사명을 기준으로 회사 정보를 조회
         CompanyEntity company = companyRepository.findByName(companyName)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회사명입니다."));
-        
+
         // 2. 조회된 회사 ID 로 배당금 조회
         List<DividendEntity> dividendEntities = dividendRepository.findAllByCompanyId(company.getId());
 
