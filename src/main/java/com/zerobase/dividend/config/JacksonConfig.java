@@ -8,7 +8,6 @@ import com.zerobase.dividend.serializer.CustomLocalDateTimeDeserializer;
 import com.zerobase.dividend.serializer.CustomLocalDateTimeSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 
 import java.time.LocalDateTime;
 
