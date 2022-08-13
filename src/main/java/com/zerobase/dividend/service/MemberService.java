@@ -1,6 +1,7 @@
 package com.zerobase.dividend.service;
 
 import com.zerobase.dividend.exception.impl.AlreadyExistUserException;
+import com.zerobase.dividend.exception.impl.SignInInfoException;
 import com.zerobase.dividend.model.Auth;
 import com.zerobase.dividend.model.MemberEntity;
 import com.zerobase.dividend.persist.repository.MemberRepository;
@@ -39,10 +40,10 @@ public class MemberService implements UserDetailsService {
 
     public MemberEntity authenticate(Auth.SignIn member) {
         MemberEntity memberEntity = memberRepository.findByUsername(member.getUsername())
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 ID 입니다."));
+                .orElseThrow(SignInInfoException::new);
 
         if (!passwordEncoder.matches(member.getPassword(), memberEntity.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new SignInInfoException();
         }
 
         return memberEntity;

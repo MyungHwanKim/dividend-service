@@ -1,6 +1,8 @@
 package com.zerobase.dividend.service;
 
+import com.zerobase.dividend.exception.impl.AlreadyExistCompanyException;
 import com.zerobase.dividend.exception.impl.NoCompanyException;
+import com.zerobase.dividend.exception.impl.NoExistCompanyTickerException;
 import com.zerobase.dividend.model.Company;
 import com.zerobase.dividend.model.ScrapedResult;
 import com.zerobase.dividend.persist.entity.CompanyEntity;
@@ -17,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class CompanyService {
     public Company save(String ticker) {
         boolean exists = companyRepository.existsByTicker(ticker);
         if (exists) {
-            throw new RuntimeException("already exists ticker -> " + ticker);
+            throw new AlreadyExistCompanyException();
         }
         return storeCompanyAndDividend(ticker);
     }
@@ -44,7 +45,7 @@ public class CompanyService {
     private Company storeCompanyAndDividend(String ticker) {
         Company company = yahooFinanceScraper.scrapCompanyByTicker(ticker);
         if (ObjectUtils.isEmpty(company)) {
-            throw new RuntimeException("failed to scrap ticker -> " + ticker);
+            throw new NoExistCompanyTickerException();
         }
 
         ScrapedResult scrapedResult = yahooFinanceScraper.scrap(company);

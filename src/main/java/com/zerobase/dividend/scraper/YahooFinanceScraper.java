@@ -57,8 +57,6 @@ public class YahooFinanceScraper implements Scraper {
                 }
 
                 dividendInputs.add(new Dividend(LocalDateTime.of(year, month, day, 0, 0), dividend));
-
-//                System.out.println(year + "/" + month + "/" + day + "->" + dividend);
             }
             scrapResult.setDividendEntities(dividendInputs);
         } catch (IOException e) {
@@ -78,7 +76,7 @@ public class YahooFinanceScraper implements Scraper {
             String title = titleElement.text().split(" - ")[1].trim();
 
             return new Company(ticker, title);
-        } catch (IOException e) {
+        } catch (IndexOutOfBoundsException | IOException e) {
             e.printStackTrace();
         }
         return null;
